@@ -54,6 +54,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bottomNode.physicsBody!.categoryBitMask = BottomCategory
         addChild(bottomNode)
         
+        let numberOfBricks = 6
+        let brickWidth = frame.size.width / CGFloat(numberOfBricks)
+        
+        for i in 0..<numberOfBricks {
+            
+            let xCoordinate = (CGFloat(i) * brickWidth) - (frame.size.width / 2) + (brickWidth / 2)
+            
+            let brickNode = SKSpriteNode(color: (i % 2 == 0 ? UIColor.blue : UIColor.red), size: CGSize(width: brickWidth, height: 25))
+            brickNode.position = CGPoint(x: xCoordinate, y: (frame.size.height / 2) - 100)
+            
+            addChild(brickNode)
+            
+        }
+        
+        /*
+        let testNode = SKSpriteNode(color: UIColor.red, size: CGSize(width: 50, height: 50))
+        testNode.position = CGPoint(x: 100, y: 200)
+        addChild(testNode)
+        */
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
