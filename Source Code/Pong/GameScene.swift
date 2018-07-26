@@ -55,18 +55,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(bottomNode)
         
         let numberOfBricks = 6
-        let brickWidth = frame.size.width / CGFloat(numberOfBricks)
+        let gapBetweenBricks = 10
+        let totalGapsBetweenBricks = gapBetweenBricks * (numberOfBricks - 1)
+        let brickWidth = (frame.size.width - CGFloat(totalGapsBetweenBricks)) / CGFloat(numberOfBricks)
         
-        for i in 0..<numberOfBricks {
+        var yCoord = (frame.size.height / 2) - 100
+        
+        for _ in 0..<4 {
             
-            let xCoordinate = (CGFloat(i) * brickWidth) - (frame.size.width / 2) + (brickWidth / 2)
+            for i in 0..<numberOfBricks {
+                
+                // let xCoordinate = (CGFloat(i) * brickWidth) - (frame.size.width / 2) + (brickWidth / 2)
+                
+                let gapOffset = CGFloat(i * gapBetweenBricks)
+                let anchorCompenstation = (frame.size.width / 2)
+                let brickWidthCompenstation = (brickWidth / 2)
+                let xCoordinate = (CGFloat(i) * brickWidth) - anchorCompenstation + brickWidthCompenstation + gapOffset
+                
+                let brickNode = SKSpriteNode(color: UIColor.blue, size: CGSize(width: brickWidth, height: 25))
+                brickNode.position = CGPoint(x: xCoordinate, y: yCoord)
+                
+                addChild(brickNode)
+                
+            }
             
-            let brickNode = SKSpriteNode(color: (i % 2 == 0 ? UIColor.blue : UIColor.red), size: CGSize(width: brickWidth, height: 25))
-            brickNode.position = CGPoint(x: xCoordinate, y: (frame.size.height / 2) - 100)
-            
-            addChild(brickNode)
+            yCoord -= 50
             
         }
+        
+        
         
         /*
         let testNode = SKSpriteNode(color: UIColor.red, size: CGSize(width: 50, height: 50))
