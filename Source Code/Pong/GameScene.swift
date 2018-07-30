@@ -61,6 +61,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         var yCoord = (frame.size.height / 2) - 100
         
+        let colorArray: [UIColor] = [.blue, .red, .yellow, .green, .purple, .orange, .brown, .magenta]
+        
         for _ in 0..<4 {
             
             for i in 0..<numberOfBricks {
@@ -72,7 +74,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let brickWidthCompenstation = (brickWidth / 2)
                 let xCoordinate = (CGFloat(i) * brickWidth) - anchorCompenstation + brickWidthCompenstation + gapOffset
                 
-                let brickNode = SKSpriteNode(color: UIColor.blue, size: CGSize(width: brickWidth, height: 25))
+                let randomNumber = Int(arc4random_uniform(UInt32(colorArray.count)))
+                
+                let brickNode = SKSpriteNode(color: colorArray[randomNumber], size: CGSize(width: brickWidth, height: 25))
                 brickNode.position = CGPoint(x: xCoordinate, y: yCoord)
                 
                 addChild(brickNode)
