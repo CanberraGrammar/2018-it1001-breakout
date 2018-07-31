@@ -11,6 +11,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let BallCategory: UInt32 = 0x1 << 0
+    let BrickCategory: UInt32 = 0x1 << 1
     let BottomCategory: UInt32 = 0x1 << 2
     
     var bottomPaddle: SKSpriteNode?
@@ -40,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball!.physicsBody!.angularDamping = 0
         ball!.physicsBody!.allowsRotation = false
         ball!.physicsBody!.categoryBitMask = BallCategory
-        ball!.physicsBody!.contactTestBitMask = BottomCategory
+        ball!.physicsBody!.contactTestBitMask = BottomCategory | BrickCategory
         
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -77,6 +78,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let randomNumber = Int(arc4random_uniform(UInt32(colorArray.count)))
                 
                 let brickNode = SKSpriteNode(color: colorArray[randomNumber], size: CGSize(width: brickWidth, height: 25))
+                brickNode.physicsBody = SKPhysicsBody(rectangleOf: brickNode.size)
+                brickNode.physicsBody!.isDynamic = false
+                brickNode.physicsBody!.categoryBitMask = BrickCategory
                 brickNode.position = CGPoint(x: xCoordinate, y: yCoord)
                 
                 addChild(brickNode)
@@ -213,6 +217,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Bottom collision")
             
             gameOver()
+            
+        }
+        
+        else if contact.bodyA.categoryBitMask == BrickCategory {
+            
+            print("Brick collision")
+            contact.bodyA.node!.removeFromParent()
+            
+        }
+        
+        else if contact.bodyB.categoryBitMask == BrickCategory {
+            
+            print("Brick collision")
+            contact.bodyB.node!.removeFromParent()
             
         }
         
