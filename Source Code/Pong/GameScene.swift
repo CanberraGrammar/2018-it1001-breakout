@@ -25,6 +25,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameRunning: Bool = false
     
+    var totalBricks: Int = 0
+    var totalTime: Int = 0
+    var gameTimer: Timer?
+    
     override func didMove(to view: SKView) {
       
         bottomPaddle = childNode(withName: "bottomPaddle") as? SKSpriteNode
@@ -55,41 +59,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bottomNode.physicsBody!.categoryBitMask = BottomCategory
         addChild(bottomNode)
         
-        let numberOfBricks = 6
-        let gapBetweenBricks = 10
-        let totalGapsBetweenBricks = gapBetweenBricks * (numberOfBricks - 1)
-        let brickWidth = (frame.size.width - CGFloat(totalGapsBetweenBricks)) / CGFloat(numberOfBricks)
         
-        var yCoord = (frame.size.height / 2) - 100
-        
-        let colorArray: [UIColor] = [.blue, .red, .yellow, .green, .purple, .orange, .brown, .magenta]
-        
-        for _ in 0..<4 {
-            
-            for i in 0..<numberOfBricks {
-                
-                // let xCoordinate = (CGFloat(i) * brickWidth) - (frame.size.width / 2) + (brickWidth / 2)
-                
-                let gapOffset = CGFloat(i * gapBetweenBricks)
-                let anchorCompenstation = (frame.size.width / 2)
-                let brickWidthCompenstation = (brickWidth / 2)
-                let xCoordinate = (CGFloat(i) * brickWidth) - anchorCompenstation + brickWidthCompenstation + gapOffset
-                
-                let randomNumber = Int(arc4random_uniform(UInt32(colorArray.count)))
-                
-                let brickNode = SKSpriteNode(color: colorArray[randomNumber], size: CGSize(width: brickWidth, height: 25))
-                brickNode.physicsBody = SKPhysicsBody(rectangleOf: brickNode.size)
-                brickNode.physicsBody!.isDynamic = false
-                brickNode.physicsBody!.categoryBitMask = BrickCategory
-                brickNode.position = CGPoint(x: xCoordinate, y: yCoord)
-                
-                addChild(brickNode)
-                
-            }
-            
-            yCoord -= 50
-            
-        }
+        generateBricks()
         
         
         
@@ -132,6 +103,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
 
             gameRunning = true
+            
+            gameTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                self.totalTime += 1
+                self.bottomScoreLabel!.text = String(self.totalTime)
+            })
             
         }
         
@@ -186,8 +162,81 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Unpause the game
         view!.isPaused = false
         
+        // Reset timer
+        totalTime = 0
+        bottomScoreLabel!.text = "0"
+        gameTimer = nil
+        
+        // Remove all bricks
+        removeAllBricks()
+        
+        // Respawn bricks
+        generateBricks()
+        
         // Reset gameRunning to false
         gameRunning = false
+        
+    }
+    
+    func generateBricks() {
+        
+        let numberOfBricks = 1
+        let numberOfRows = 1
+        let gapBetweenBricks = 10
+        let totalGapsBetweenBricks = gapBetweenBricks * (numberOfBricks - 1)
+        let brickWidth = (frame.size.width - CGFloat(totalGapsBetweenBricks)) / CGFloat(numberOfBricks)
+        
+        totalBricks = numberOfBricks * numberOfRows
+        
+        var yCoord = (frame.size.height / 2) - 100
+        
+        let colorArray: [UIColor] = [.blue, .red, .yellow, .green, .purple, .orange, .brown, .magenta]
+        
+        for _ in 0..<numberOfRows {
+            
+            for i in 0..<numberOfBricks {
+                
+                // let xCoordinate = (CGFloat(i) * brickWidth) - (frame.size.width / 2) + (brickWidth / 2)
+                
+                let gapOffset = CGFloat(i * gapBetweenBricks)
+                let anchorCompenstation = (frame.size.width / 2)
+                let brickWidthCompenstation = (brickWidth / 2)
+                let xCoordinate = (CGFloat(i) * brickWidth) - anchorCompenstation + brickWidthCompenstation + gapOffset
+                
+                let randomNumber = Int(arc4random_uniform(UInt32(colorArray.count)))
+                
+                let brickNode = SKSpriteNode(color: colorArray[randomNumber], size: CGSize(width: brickWidth, height: 25))
+                brickNode.physicsBody = SKPhysicsBody(rectangleOf: brickNode.size)
+                brickNode.physicsBody!.isDynamic = false
+                brickNode.physicsBody!.categoryBitMask = BrickCategory
+                brickNode.name = "brick"
+                brickNode.position = CGPoint(x: xCoordinate, y: yCoord)
+                
+                addChild(brickNode)
+                
+            }
+            
+            yCoord -= 50
+            
+        }
+        
+    }
+    
+    func removeAllBricks() {
+        
+        enumerateChildNodes(withName: "brick") { (node, _) in
+            node.removeFromParent()
+        }
+        
+        /*let allNodes = children
+        
+        for node in allNodes {
+            
+            if node.name == "brick" {
+                node.removeFromParent()
+            }
+            
+        }*/
         
     }
     
@@ -195,6 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Pause the game
         view!.isPaused = true
+        gameTimer!.invalidate()
         
         // Show an alert
         let gameOverAlert = UIAlertController(title: "Game Over", message: nil, preferredStyle: .alert)
@@ -207,6 +257,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameOverAlert.addAction(gameOverAction)
         
         self.view!.window!.rootViewController!.present(gameOverAlert, animated: true, completion: nil)
+        
+    }
+    
+    func checkForWin() {
+        
+        if totalBricks == 0 {
+            
+            view!.isPaused = true
+            gameTimer!.invalidate()
+            
+            let winAlert = UIAlertController(title: "You Won!", message: nil, preferredStyle: .alert)
+            let winAction = UIAlertAction(title: "Okay", style: .default) { (theAlertAction) in
+                
+                self.resetGame()
+                
+            }
+            
+            winAlert.addAction(winAction)
+            self.view!.window!.rootViewController!.present(winAlert, animated: true, completion: nil)
+            
+        }
         
     }
     
@@ -224,6 +295,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             print("Brick collision")
             contact.bodyA.node!.removeFromParent()
+            totalBricks -= 1
+            
+            checkForWin()
             
         }
         
@@ -231,6 +305,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             print("Brick collision")
             contact.bodyB.node!.removeFromParent()
+            totalBricks -= 1
+            
+            checkForWin()
             
         }
         
