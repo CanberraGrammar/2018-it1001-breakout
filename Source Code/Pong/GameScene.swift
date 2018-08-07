@@ -180,8 +180,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func generateBricks() {
         
-        let numberOfBricks = 1
-        let numberOfRows = 1
+        let numberOfBricks = 6
+        let numberOfRows = 4
         let gapBetweenBricks = 10
         let totalGapsBetweenBricks = gapBetweenBricks * (numberOfBricks - 1)
         let brickWidth = (frame.size.width - CGFloat(totalGapsBetweenBricks)) / CGFloat(numberOfBricks)
@@ -293,8 +293,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         else if contact.bodyA.categoryBitMask == BrickCategory {
             
-            print("Brick collision")
+            let emitter = SKEmitterNode(fileNamed: "BrickExplode")
+            emitter!.position = contact.bodyA.node!.position
+            addChild(emitter!)
             contact.bodyA.node!.removeFromParent()
+            
+            let emitterDelayAction = SKAction.wait(forDuration: 2.0)
+            let emitterFadeAction = SKAction.fadeOut(withDuration: 1.0)
+            let emitterRemoveAction = SKAction.removeFromParent()
+            
+            let emitterDisapperanceActions = [emitterDelayAction, emitterFadeAction, emitterRemoveAction]
+            
+            emitter!.run(SKAction.sequence(emitterDisapperanceActions))
+            
             totalBricks -= 1
             
             checkForWin()
@@ -303,8 +314,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         else if contact.bodyB.categoryBitMask == BrickCategory {
             
-            print("Brick collision")
+            let emitter = SKEmitterNode(fileNamed: "BrickExplode")
+            emitter!.position = contact.bodyB.node!.position
+            addChild(emitter!)
             contact.bodyB.node!.removeFromParent()
+            
+            let emitterDelayAction = SKAction.wait(forDuration: 2.0)
+            let emitterFadeAction = SKAction.fadeOut(withDuration: 1.0)
+            let emitterRemoveAction = SKAction.removeFromParent()
+            
+            let emitterDisapperanceActions = [emitterDelayAction, emitterFadeAction, emitterRemoveAction]
+            
+            emitter!.run(SKAction.sequence(emitterDisapperanceActions))
+            
             totalBricks -= 1
             
             checkForWin()
