@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D151EE7A211BDD0D008D2D4C /* BallTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = D151EE79211BDD0D008D2D4C /* BallTrail.sks */; };
 		D16267492119396A00C88ADB /* BrickExplode.sks in Resources */ = {isa = PBXBuildFile; fileRef = D16267482119396A00C88ADB /* BrickExplode.sks */; };
 		D19AFF2B20B3B5BD001AA7B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19AFF2A20B3B5BD001AA7B9 /* AppDelegate.swift */; };
 		D19AFF2D20B3B5BD001AA7B9 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D19AFF2C20B3B5BD001AA7B9 /* GameScene.sks */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D151EE79211BDD0D008D2D4C /* BallTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BallTrail.sks; sourceTree = "<group>"; };
 		D16267482119396A00C88ADB /* BrickExplode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BrickExplode.sks; sourceTree = "<group>"; };
 		D19AFF2720B3B5BC001AA7B9 /* Breakout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breakout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D19AFF2A20B3B5BD001AA7B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				D19AFF3920B3B5BE001AA7B9 /* LaunchScreen.storyboard */,
 				D19AFF3C20B3B5BE001AA7B9 /* Info.plist */,
 				D16267482119396A00C88ADB /* BrickExplode.sks */,
+				D151EE79211BDD0D008D2D4C /* BallTrail.sks */,
 			);
 			path = Pong;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				D19AFF2D20B3B5BD001AA7B9 /* GameScene.sks in Resources */,
 				D19AFF3820B3B5BE001AA7B9 /* Assets.xcassets in Resources */,
 				D16267492119396A00C88ADB /* BrickExplode.sks in Resources */,
+				D151EE7A211BDD0D008D2D4C /* BallTrail.sks in Resources */,
 				D19AFF3B20B3B5BE001AA7B9 /* LaunchScreen.storyboard in Resources */,
 				D19AFF2F20B3B5BD001AA7B9 /* Actions.sks in Resources */,
 			);

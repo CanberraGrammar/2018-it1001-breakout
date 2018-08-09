@@ -47,6 +47,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball!.physicsBody!.categoryBitMask = BallCategory
         ball!.physicsBody!.contactTestBitMask = BottomCategory | BrickCategory
         
+        ball!.zPosition = 1
+        let ballTrailEmitterNode = SKEmitterNode(fileNamed: "BallTrail")
+        ballTrailEmitterNode!.targetNode = self
+        ball!.addChild(ballTrailEmitterNode!)
+        
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
