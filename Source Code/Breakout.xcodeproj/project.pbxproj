@@ -17,6 +17,7 @@
 		D19AFF3620B3B5BD001AA7B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D19AFF3420B3B5BD001AA7B9 /* Main.storyboard */; };
 		D19AFF3820B3B5BE001AA7B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D19AFF3720B3B5BE001AA7B9 /* Assets.xcassets */; };
 		D19AFF3B20B3B5BE001AA7B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D19AFF3920B3B5BE001AA7B9 /* LaunchScreen.storyboard */; };
+		D1D1EBE62121157500E28F9F /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D1D1EBE52121157500E28F9F /* explosion.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		D19AFF3720B3B5BE001AA7B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D19AFF3A20B3B5BE001AA7B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D19AFF3C20B3B5BE001AA7B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1D1EBE52121157500E28F9F /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				D19AFF3C20B3B5BE001AA7B9 /* Info.plist */,
 				D16267482119396A00C88ADB /* BrickExplode.sks */,
 				D151EE79211BDD0D008D2D4C /* BallTrail.sks */,
+				D1D1EBE52121157500E28F9F /* explosion.mp3 */,
 			);
 			path = Pong;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 				D19AFF2D20B3B5BD001AA7B9 /* GameScene.sks in Resources */,
 				D19AFF3820B3B5BE001AA7B9 /* Assets.xcassets in Resources */,
 				D16267492119396A00C88ADB /* BrickExplode.sks in Resources */,
+				D1D1EBE62121157500E28F9F /* explosion.mp3 in Resources */,
 				D151EE7A211BDD0D008D2D4C /* BallTrail.sks in Resources */,
 				D19AFF3B20B3B5BE001AA7B9 /* LaunchScreen.storyboard in Resources */,
 				D19AFF2F20B3B5BD001AA7B9 /* Actions.sks in Resources */,

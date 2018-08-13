@@ -313,6 +313,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             totalBricks -= 1
             
+            let explosionAudioAction = SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false)
+            contact.bodyA.node!.run(explosionAudioAction)
+            
             checkForWin()
             
         }
@@ -333,6 +336,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             emitter!.run(SKAction.sequence(emitterDisapperanceActions))
             
             totalBricks -= 1
+            
+            let explosionAudioAction = SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false)
+            contact.bodyA.node!.run(explosionAudioAction)
             
             checkForWin()
             
